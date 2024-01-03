@@ -4,6 +4,7 @@ import {useState,useRef, useEffect}from "react";
 import '../App.css'
 import Question from "../Components/Question"; '../Components/Question.jsx'
 export default function Home() {
+ // const [css,setcss]=useState('custom')
   const componentRef=useRef(null);
   const [clicked,setclicked]=useState(false)
   const [toggle,settoggle]=useState(false);

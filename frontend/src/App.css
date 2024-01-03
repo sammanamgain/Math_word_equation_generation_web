@@ -1,7 +1,16 @@
 .customcss{
-   /* background-image:url(Image/pexels-daniel-putzer-633409.jpg);*/
+    background-image:url(Image/pexels-daniel-putzer-633409.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #3298db;
+
     color:#ffffff
+}
+.customcssquestion{
+    color:black;
+    background-image:url(Image/2.jpg) !important;
+    
+    background-size: cover;
+   
+    
+   
 }
