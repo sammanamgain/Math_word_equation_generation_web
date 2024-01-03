@@ -14,7 +14,7 @@ const Question = React.forwardRef((props, ref) => {
   };
   //#36d7b7
   let [color, setColor] = useState("#4fbeda");
-  const [value, setvalue] = useState("succesfull");
+  const [value, setvalue] = useState("2x+5y=3,6x+8y=9");
   const [loading, setloading] = useState(false);
   const [response, setresponse] = useState(false);
   const handleclick = async () => {
@@ -81,6 +81,7 @@ const Question = React.forwardRef((props, ref) => {
       {response ? (
         <div className="text-black  flex flex-col items-center gap-4 my-10">
           <input
+          readOnly
             className="text-black bg-slate-700 w-[40vw] px-5 py-2.5 me-2 mb-2 text-center font-medium"
             type="textbox"
             value={value}
