@@ -1,0 +1,7 @@
+backend/Models/
+backend/Tokenizer/
+node_modules
+frontend/node_modules/
+.Models
+.Tokenizer
+.node_modules
