@@ -93,7 +93,7 @@ const Question = React.forwardRef((props, ref) => {
         <div className="text-black  flex flex-col items-center gap-4 my-10">
           <input
             readOnly
-            className="text-black bg-slate-700 w-[40vw] px-5 py-2.5 me-2 mb-2 text-center font-medium"
+            className="text-black bg-slate-500 w-[40vw] px-5 py-2.5 me-2 mb-2 text-center font-medium rounded-3xl "
             type="textbox"
             value={value}
           ></input>

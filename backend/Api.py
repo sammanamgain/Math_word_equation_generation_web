@@ -21,7 +21,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained("sammanamgain/T5_model")
 #         # Get JSON data from the request body
 
 
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+#print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 #CORS(app, resources={r"/math": {"origins": "http://localhost:5173"}, "methods": ["OPTIONS", "POST"]})
 CORS(app)
 
@@ -29,24 +29,29 @@ CORS(app)
 
 @app.route('/math', methods=['POST'])
 def math_solver():
+    print("is it running")
+   
     try:
         data = request.get_json()
-        print(data.question)
+    
+        print(data['question'])
         input_ids = tokenizer(
-        f"English to Math Equation:{data.question}", return_tensors="pt"
+        f"English to Math Equation:{data['question']}", return_tensors="pt"
         ).input_ids.to(device)
         outputs = model.generate(input_ids)
+        output=tokenizer.decode(outputs[0], skip_special_tokens=True)
         #equation="2x+3=5"
+        print(output)
 
         
-        # Process the data (you can perform any operations here)
-
-        # Send a dummy JSON response
-        response_data = {'success':True,'message': 'Data received successfully', 'data': outputs}
+        
+        response_data = {'success':True,'message': 'Data received successfully', 'data': output}
         return jsonify(response_data), 200
 
     except Exception as e:
-        # Handle exceptions or errors
+        print("Error")
+        print(str(e))
+        
         return jsonify({'error': str(e)}), 500
     
 
