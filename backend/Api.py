@@ -4,17 +4,24 @@ import os
 from flask import Flask, request, jsonify
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 app = Flask(__name__)
+# Load model directly
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+tokenizer = AutoTokenizer.from_pretrained("sammanamgain/T5_model")
+model = AutoModelForSeq2SeqLM.from_pretrained("sammanamgain/T5_model")
 # model_path = os.path.join(os.path.dirname(__file__), "Models")
 # tokenizer_path = os.path.join(os.path.dirname(__file__), "Tokenizer")
 # model = T5ForConditionalGeneration.from_pretrained(model_path)
 # #print(model)
 # tokenizer = T5Tokenizer.from_pretrained(tokenizer_path,legacy=False)
 #         # Get JSON data from the request body
-# input_ids = tokenizer(
-# "English to Math Equation:A number is 72 less than its square. Find all such numbers.", return_tensors="pt"
-# )
-# outputs = model.generate(input_ids)
-# print(outputs)
+
+
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 #CORS(app, resources={r"/math": {"origins": "http://localhost:5173"}, "methods": ["OPTIONS", "POST"]})
 CORS(app)
 
@@ -24,13 +31,18 @@ CORS(app)
 def math_solver():
     try:
         data = request.get_json()
-        equation="2x+3=5"
+        print(data.question)
+        input_ids = tokenizer(
+        f"English to Math Equation:{data.question}", return_tensors="pt"
+        ).input_ids.to(device)
+        outputs = model.generate(input_ids)
+        #equation="2x+3=5"
 
         
         # Process the data (you can perform any operations here)
 
         # Send a dummy JSON response
-        response_data = {'success':True,'message': 'Data received successfully', 'data': equation}
+        response_data = {'success':True,'message': 'Data received successfully', 'data': outputs}
         return jsonify(response_data), 200
 
     except Exception as e:

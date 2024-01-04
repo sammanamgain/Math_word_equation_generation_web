@@ -13,19 +13,27 @@ const Question = React.forwardRef((props, ref) => {
     borderColor: "red",
   };
   //#36d7b7
-  let [color, setColor] = useState("#4fbeda");
+  let color = "#4fbeda";
+  const [question, setquestion] = useState({});
+
   const [value, setvalue] = useState("2x+5y=3,6x+8y=9");
   const [loading, setloading] = useState(false);
   const [response, setresponse] = useState(false);
+  const handlechange = (e) => {
+    setquestion({...question,[e.target.id]: e.target.value});
+    console.log(question);
+  };
+
   const handleclick = async () => {
     setloading(true);
     console.log("didn't it called?");
     const res = await fetch("http://127.0.0.1:5000/math", {
       method: "post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "samman" }),
+      body: JSON.stringify(question),
     });
     const data = await res.json();
+    
 
     console.log(data);
     setTimeout(() => {
@@ -33,8 +41,9 @@ const Question = React.forwardRef((props, ref) => {
         setloading(false);
         console.log("entered in this state");
         setresponse(true);
+        setvalue(data.data);
       }
-    }, 4000);
+    }, 3000);
   };
   return (
     <div
@@ -53,6 +62,8 @@ const Question = React.forwardRef((props, ref) => {
             className="w-[40vw] px-5 py-2.5 me-2 mb-2 text-center font-medium"
             type="text"
             placeholder="Enter the Math Word Problem here..."
+            id="question"
+            onChange={handlechange}
           ></input>
         </div>
         <div>
@@ -81,7 +92,7 @@ const Question = React.forwardRef((props, ref) => {
       {response ? (
         <div className="text-black  flex flex-col items-center gap-4 my-10">
           <input
-          readOnly
+            readOnly
             className="text-black bg-slate-700 w-[40vw] px-5 py-2.5 me-2 mb-2 text-center font-medium"
             type="textbox"
             value={value}
